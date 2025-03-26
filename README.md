@@ -94,7 +94,7 @@
 1. 克隆我们的仓库并跳转到相应目录
 
 ```bash
-git clone https://github.com/ChengduMinto/WorkBrain-V1.0.git
+git clone https://github.com/ChengduMinto/WorkBrain-V2.0.git
 cd WorkBrain-V1.0
 ```
 
@@ -159,9 +159,5 @@ python workbrain_main_web.py
 - **加入讨论**：欢迎广大开发者加入我们的官方交流群，参与技术讨论，分享使用心得，共同推动项目的发展。
 
 此外，您也可以发送邮件至我们的官方邮箱 `BC@mingto.net`，我们将尽力提供帮助。
-
-您也可以加入 **WorkBrain 开发者论坛**微信群：
-
-![微信群二维码](./imgs/微信群.png "点击加入微信群")
 
 感谢您对本项目的关注和支持！期待与您一起构建更好的解决方案。
