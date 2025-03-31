@@ -1,0 +1,11 @@
+#uv pip install flask flask-socketio nest-asyncio Pillow python-dotenv openai httpx mcp requests dashscope
+flask
+flask_socketio
+nest_asyncio
+Pillow
+python-dotenv
+openai
+httpx
+mcp
+requests
+dashscope

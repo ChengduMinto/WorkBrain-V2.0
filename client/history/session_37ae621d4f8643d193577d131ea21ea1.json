@@ -1,0 +1,38 @@
+[
+  {
+    "role": "system",
+    "content": [
+      {
+        "type": "text",
+        "text": "You are a helpful assistant with multimodal capabilities. When analyzing images, videos or audio, provide descriptive analysis based on what you see. DO NOT generate or return markdown image links. ONLY analyze the content provided by the user. For images, describe what you see in detail."
+      }
+    ]
+  },
+  {
+    "role": "user",
+    "content": "帮我介绍一下成都，并配上一张图"
+  },
+  {
+    "role": "assistant",
+    "content": null,
+    "tool_calls": [
+      {
+        "id": "call_52a19767719a44b7bb949f",
+        "function": {
+          "name": "generate_image",
+          "arguments": "{\"prompt\": \"成都\", \"size\": \"1024*1024\"}"
+        },
+        "type": "function"
+      }
+    ]
+  },
+  {
+    "role": "tool",
+    "tool_call_id": "call_52a19767719a44b7bb949f",
+    "content": "{\"type\": \"image\", \"url\": \"/static/outputs/3d994953-dc9b-4036-b1b7-268efd377b844191106102.png\", \"description\": \"\\u57fa\\u4e8e\\u63d0\\u793a\\u8bcd'\\u6210\\u90fd'\\u751f\\u6210\\u7684\\u56fe\\u7247\"}"
+  },
+  {
+    "role": "assistant",
+    "content": "成都，位于中国四川省中部，是四川省的省会城市。这座城市以其悠久的历史、丰富的文化、美味的食物和悠闲的生活方式而闻名。成都是一个融合了现代都市活力与传统文化韵味的城市，这里既有繁华的商业街区，也有宁静的茶馆和古色古香的街道。大熊猫繁育研究基地就坐落在这里，吸引着来自世界各地的游客前来参观。此外，成都还以其独特的美食著称，如麻辣火锅、串串香等，让无数食客流连忘返。\n\n关于您提到的图片，由于我无法直接查看外部链接或上传的内容，但我可以根据您的描述来进行说明。如果这张图是基于“成都”生成的话，它可能包含了代表成都特色的一些元素：比如可以看到现代化的高楼大厦与传统建筑并存的画面，或是展示着当地标志性景点如武侯祠、锦里古街、宽窄巷子等地；也可能有大熊猫的形象出现在其中，以及一些体现成都饮食文化的元素，如热腾腾的火锅等。这样的画面能够很好地概括出成都这座城市的魅力所在。如果您希望对特定图像内容进行更详细的讨论，请提供具体的图像信息或者描述其主要内容。"
+  }
+]
