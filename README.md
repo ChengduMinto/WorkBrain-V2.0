@@ -115,7 +115,7 @@ pip install -r requirements.txt
 
 网页交互运行： 
 
-python workbrain_main_web.py
+python workbrain.py
 
 # 开源协议
 ## 模型协议
