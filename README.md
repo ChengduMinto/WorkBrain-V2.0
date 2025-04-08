@@ -95,27 +95,32 @@
 
 ```bash
 git clone https://github.com/ChengduMinto/WorkBrain-V2.0.git
-cd WorkBrain-V1.0
+cd WorkBrain-V2.0
 ```
 
-2. 创建 conda 环境
+2. 创建 uv 环境
 
 ```Shell
-conda create -n WorkBrain python=3.10 -y
-conda activate WorkBrain
+#安装uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+#创建虚拟环境并激活
+uv venv
+source .venv/bin/activate
 ```
 
 3. 安装依赖
 
 ```shell
-pip install -r requirements.txt
+uv pip install -r requirements.txt
 ```
 
 ### 模型交互使用
 
 网页交互运行： 
 
-python workbrain.py
+cd client
+uv run client.py  ./server/workbrain.py
 
 # 开源协议
 ## 模型协议
