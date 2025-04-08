@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/github.min.css">
+    <!-- 引入 github-markdown-css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css" integrity="sha512-5B+WYWJHJ+zO2vZImh0ZzbzVEp8ZBI1YO+caHYsOkfHrEWsMAhdrrPxtDkGT2EQX+Y7nY7zce9UKe+LPs3Sgcg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/marked@4.2.3/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/highlight.min.js"></script>
     <style>
@@ -119,7 +121,7 @@
 
         .message-bubble {
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 8px 16px;
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
             background-color: var(--assistant-bg);
         }
@@ -167,17 +169,19 @@
             z-index: 2;
         }
 
+        .user .message {
+            margin-left: auto;
+            margin-right: 50px;
+        }
+
         .user .avatar {
             background-color: #10b981;
+            left: auto;
+            right: 32px;
         }
 
         .tool .avatar {
             background-color: #4f46e5;
-        }
-
-        .user .message {
-            margin-left: auto;
-            margin-right: 50px;
         }
 
         .message-meta {
@@ -372,10 +376,27 @@
         }
 
         .status-bar {
-            font-size: 0.8rem;
-            color: var(--muted-color);
-            text-align: center;
-            padding: 8px 0;
+            background: #f5f5f5;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #e0e0e0;
+        }
+        .progress {
+            height: 20px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        #statusMessage {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #555;
         }
 
         @keyframes typing {
@@ -443,10 +464,57 @@
             background: #9ca3af;
         }
 
-        /* 添加Markdown样式 */
+        /* 移除或注释掉旧的 .markdown-content 相关样式 */
+        /*
         .markdown-content {
             line-height: 1.6;
+            margin: 0;
+            padding: 0;
         }
+
+        .markdown-content p {
+            margin-top: 0;
+            margin-bottom: 0.5rem; 
+            padding: 0;
+        }
+        
+        .markdown-content li > p {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+
+        .markdown-content li > p:has(+ ul),
+        .markdown-content li > p:has(+ ol) {
+           margin-bottom: 0;
+        }
+
+        .markdown-content p:last-child,
+        .markdown-content p:only-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-content ul,
+        .markdown-content ol {
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1.8em; 
+        }
+        
+        .markdown-content li ul,
+        .markdown-content li ol {
+             margin-top: 0.2rem; 
+             margin-bottom: 0.2rem;
+        }
+
+        .markdown-content ul:last-child,
+        .markdown-content ol:last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-content li {
+             margin-top: 0.2rem;
+        }
+
         .markdown-content h1 {
             font-size: 1.5rem;
             margin-top: 1rem;
@@ -464,9 +532,6 @@
             margin-top: 0.6rem;
             margin-bottom: 0.3rem;
             font-weight: 600;
-        }
-        .markdown-content p {
-            margin-bottom: 0.5rem;
         }
         .markdown-content pre {
             background-color: #f6f8fa;
@@ -492,10 +557,6 @@
             color: #6a737d;
             margin-bottom: 0.5rem;
         }
-        .markdown-content ul, .markdown-content ol {
-            padding-left: 1.5em;
-            margin-bottom: 0.5rem;
-        }
         .markdown-content table {
             border-collapse: collapse;
             width: 100%;
@@ -508,6 +569,60 @@
         .markdown-content table th {
             background-color: #f6f8fa;
         }
+        */
+       /* --- 新的 markdown 样式调整 --- */
+        /* 让 markdown-body 接管样式，但限制最大宽度并居中 */
+        .message-bubble .markdown-body {
+            max-width: 100%; /* 或者设一个具体的值，如 700px */
+            margin: 0 auto;
+            padding: 0; /* 移除内边距，由 markdown-body 控制 */
+            text-align: left; /* 确保左对齐 */
+        }
+        
+        /* 调整代码块背景和字体 */
+        .markdown-body pre {
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            padding: 16px;
+        }
+        
+        .markdown-body code {
+             font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+             font-size: 0.85em;
+        }
+        
+        /* (可选) 调整列表间距 - 如果默认的还不够理想 */
+        .markdown-body ul,
+        .markdown-body ol {
+            /* margin-top: 8px;
+            margin-bottom: 8px; */
+            /* padding-left: 2em; */
+        }
+        
+        .markdown-body li {
+            /* margin-top: 4px; */
+        }
+        /* --- 结束 markdown 样式调整 --- */
+
+        /* --- 覆盖 github-markdown-css 的列表间距 --- */
+        .markdown-body ul,
+        .markdown-body ol {
+            margin-top: 0.5em;    /* 减小列表整体的上边距 */
+            margin-bottom: 0.5em; /* 减小列表整体的下边距 */
+            padding-left: 2em;    /* 稍微调整内边距 */
+        }
+
+        .markdown-body li {
+            margin-top: 0.1em;    /* 大幅减小列表项之间的上边距 */
+        }
+
+        /* 确保列表项内的段落无额外上下边距 */
+        .markdown-body li > p {
+            margin-top: 0;
+            margin-bottom: 0.2em; /* 段落下可以保留极小的间距 */
+        }
+        /* --- 结束列表间距覆盖 --- */
+
         .tool-result {
             margin: 10px 0;
         }
@@ -524,6 +639,790 @@
             background-color: #fee2e2;
             border-radius: 6px;
             margin: 8px 0;
+        }
+
+        /* 添加工具状态指示器样式 */
+        .tool-status-indicator {
+            background-color: #f0f9ff;
+            border-left: 4px solid #3b82f6;
+            padding: 8px 12px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1e40af;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tool-status-indicator i {
+            font-size: 16px;
+        }
+        
+        .tool-status-indicator .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spinner 1s linear infinite;
+        }
+        
+        @keyframes spinner {
+            to {transform: rotate(360deg);}
+        }
+        
+        .tool-status-indicator.running {
+            background-color: #f0f9ff;
+            border-left-color: #3b82f6;
+        }
+        
+        .tool-status-indicator.completed {
+            background-color: #f0fdf4;
+            border-left-color: #22c55e;
+            color: #166534;
+        }
+
+        .tools-container {
+            position: relative;
+            width: auto;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            margin: 8px 0;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .tools-header {
+            padding: 8px 12px;
+            font-weight: 600;
+            background-color: #f3f4f6;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tool-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            background-color: white;
+        }
+
+        .tool-item:last-child {
+            border-bottom: none;
+        }
+
+        .tool-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tool-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .tool-name {
+            font-weight: 500;
+            margin-right: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .tool-time {
+            color: #6b7280;
+            font-size: 12px;
+        }
+
+        .tool-message {
+            font-size: 13px;
+            color: #4b5563;
+            margin-left: 24px;
+        }
+
+        .tool-progress {
+            height: 4px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            margin-top: 6px;
+            margin-left: 24px;
+            overflow: hidden;
+        }
+
+        .tool-progress > div {
+            height: 100%;
+            background-color: #3b82f6;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .status-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .status-icon.running:before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            border-top-color: #3b82f6;
+            border-left-color: #3b82f6;
+            animation: spin 1s linear infinite;
+        }
+
+        .status-icon.running {
+            background-color: #dbeafe;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .status-icon.complete {
+            background-color: #d1fae5;
+        }
+
+        .status-icon.complete:before {
+            content: "✓";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #10b981;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status-icon.error {
+            background-color: #fee2e2;
+        }
+
+        .status-icon.error:before {
+            content: "!";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ef4444;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .tool-close-btn {
+            cursor: pointer;
+            color: #9ca3af;
+            background-color: transparent;
+            border: none;
+            font-size: 16px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            margin-left: 8px;
+        }
+
+        .tool-close-btn:hover {
+            color: #4b5563;
+            background-color: #f3f4f6;
+        }
+
+        /* 搜索结果样式 */
+        .search-results {
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin: 10px 0;
+            border: 1px solid #e9ecef;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .search-header {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .search-header h4 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .toggle-all-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            color: #495057;
+        }
+        .toggle-all-btn:hover {
+            background: #dee2e6;
+        }
+        .search-body {
+            padding: 0;
+        }
+        .result-item {
+            border-bottom: 1px solid #e9ecef;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-header {
+            padding: 10px 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .result-header:hover {
+            background-color: #f1f3f5;
+        }
+        .result-header h5 {
+            margin: 0;
+            font-size: 15px;
+            color: #1a73e8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            flex: 1;
+        }
+        .toggle-icon {
+            color: #adb5bd;
+            font-size: 10px;
+            transition: transform 0.2s;
+        }
+        .result-details {
+            padding: 0 12px 10px;
+            font-size: 13px;
+            color: #495057;
+            border-top: 1px solid #f1f3f5;
+        }
+        .result-meta {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 6px;
+            color: #6c757d;
+            font-size: 12px;
+        }
+        .site-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            vertical-align: middle;
+            border-radius: 2px;
+        }
+        .result-url {
+            color: #099268;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-left: auto;
+        }
+        .external-link-icon {
+            font-style: normal;
+            margin-left: 4px;
+            font-size: 10px;
+        }
+        .result-snippet {
+            margin: 6px 0;
+            line-height: 1.4;
+        }
+        .result-date {
+            font-size: 11px;
+            color: #6c757d;
+        }
+        .no-results {
+            padding: 12px;
+            text-align: center;
+            color: #6c757d;
+        }
+        
+        /* 新增样式 */
+        .search-section-title {
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #495057;
+            background-color: #f1f3f5;
+            border-bottom: 1px solid #e9ecef;
+            border-top: 1px solid #e9ecef;
+            margin-top: -1px;
+        }
+        
+        .image-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
+            padding: 12px;
+        }
+        
+        .image-result-item {
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            height: 100px;
+            background-color: #f8f9fa;
+        }
+        
+        .image-result-item a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .image-result-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s;
+        }
+        
+        .image-result-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        @media (max-width: 768px) {
+            .image-results-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+            
+            .image-result-item {
+                height: 80px;
+            }
+        }
+
+        /* 当消息内容中只有一个段落时，减少内部padding */
+        .message-content:only-child p:only-child {
+            margin: 0;
+        }
+        
+        /* ChatGPT风格搜索结果 */
+        .chatgpt-search-results {
+            border-radius: 12px;
+            border: 1px solid rgb(222, 226, 230);
+            background-color: #fff;
+            overflow: hidden;
+            margin: 12px 0;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", sans-serif;
+        }
+        
+        .chatgpt-search-results .search-header {
+            padding: 12px 16px;
+            background-color: #f9fafb;
+            border-bottom: 1px solid #eaecef;
+        }
+        
+        .chatgpt-search-results .search-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .chatgpt-search-results .search-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #f0f0f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3b82f6;
+            flex-shrink: 0;
+        }
+        
+        .chatgpt-search-results .search-text {
+            flex: 1;
+        }
+        
+        .chatgpt-search-results .search-query {
+            font-weight: 600;
+            font-size: 14px;
+            color: #111827;
+        }
+        
+        .chatgpt-search-results .search-count {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+        
+        .chatgpt-search-results .search-results-container {
+            padding: 0;
+        }
+        
+        .chatgpt-search-results .search-result-item {
+            border-bottom: 1px solid #eaecef;
+        }
+        
+        .chatgpt-search-results .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chatgpt-search-results .search-result-link {
+            display: block;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: background-color 0.15s;
+        }
+        
+        .chatgpt-search-results .search-result-link:hover {
+            background-color: #f9fafb;
+        }
+        
+        .chatgpt-search-results .search-result-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 4px;
+        }
+        
+        .chatgpt-search-results .site-icon {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .chatgpt-search-results .site-icon-placeholder {
+            width: 16px;
+            height: 16px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .chatgpt-search-results .search-result-title {
+            margin: 0;
+            font-size: 15px;
+            font-weight: 600;
+            color: #3b82f6;
+            line-height: 1.4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .chatgpt-search-results .search-result-url {
+            font-size: 12px;
+            color: #10b981;
+            margin: 2px 0 6px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .chatgpt-search-results .search-result-snippet {
+            font-size: 13px;
+            color: #4b5563;
+            line-height: 1.5;
+            margin-bottom: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .chatgpt-search-results .search-result-meta {
+            display: flex;
+            gap: 6px;
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .chatgpt-search-results .search-result-source,
+        .chatgpt-search-results .search-result-date {
+            display: inline-block;
+        }
+        
+        .chatgpt-search-results .search-result-date::before {
+            content: "•";
+            margin-right: 6px;
+        }
+        
+        .chatgpt-search-results .search-images-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 8px;
+            padding: 16px;
+        }
+        
+        .chatgpt-search-results .search-image-item {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            display: block;
+        }
+        
+        .chatgpt-search-results .search-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.2s;
+        }
+        
+        .chatgpt-search-results .search-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .chatgpt-search-results .search-no-results {
+            padding: 16px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .chatgpt-search-results .search-images-container {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+
+        /* 简化版搜索结果样式 */
+        .search-results-simple {
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            background-color: #fff;
+            margin: 12px 0;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .search-header-simple {
+            padding: 10px 16px;
+            background-color: #f9fafb;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-icon-simple {
+            color: #3b82f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-text-simple {
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .search-links-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .search-link-item {
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .search-link-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-title-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: inherit;
+            transition: background-color 0.2s;
+        }
+        
+        .search-title-link:hover {
+            background-color: #f9fafb;
+        }
+        
+        .site-icon-simple {
+            width: 16px;
+            height: 16px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .site-icon-placeholder-simple {
+            width: 16px;
+            height: 16px;
+            background-color: #e5e7eb;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        
+        .search-title-text {
+            font-size: 14px;
+            color: #2563eb;
+            font-weight: 500;
+        }
+        
+        .search-empty {
+            padding: 12px 16px;
+            color: #6b7280;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        /* 文档预览样式 */
+        .document-preview {
+            display: flex;
+            align-items: center;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin: 8px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .document-icon {
+            font-size: 2rem;
+            margin-right: 16px;
+            color: #4b5563;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .document-icon .bi-file-earmark-word {
+            color: #2b5797;
+        }
+        
+        .document-icon .bi-file-earmark-excel {
+            color: #1e7145;
+        }
+        
+        .document-icon .bi-file-earmark-slides {
+            color: #d24726;
+        }
+        
+        .document-icon .bi-file-earmark-pdf {
+            color: #f40f02;
+        }
+        
+        .document-icon .bi-file-earmark-text {
+            color: #6b7280;
+        }
+        
+        .document-info {
+            flex: 1;
+            overflow: hidden;
+            min-width: 0;
+        }
+        
+        .document-name {
+            font-weight: 500;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+        
+        .document-type {
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        
+        .document-download-btn {
+            margin-left: 12px;
+            color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+        }
+        
+        .document-download-btn:hover {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        .media-item .document-icon {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            background-color: #f3f4f6;
+            font-size: 30px;
+        }
+        
+        /* 文档下载按钮样式 */
+        .document-download {
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .document-download-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        
+        .document-download-button:hover {
+            background-color: #2563eb;
+        }
+        
+        .document-download-button i {
+            margin-right: 6px;
         }
     </style>
 </head>
@@ -553,11 +1452,14 @@
                         <i class="bi bi-send-fill"></i>
                     </button>
                 </div>
-                <input type="file" id="fileInput" style="display: none;" accept="image/*,audio/*,video/*">
+                <input type="file" id="fileInput" style="display: none;" accept="image/*,audio/*,video/*,application/msword,application/vnd.ms-excel,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/pdf,text/plain">
             </div>
             
-            <div class="status-bar" id="statusBar">
-                <span>已连接</span>
+            <div id="statusBar" class="status-bar" style="display: none;">
+                <div class="progress">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <p id="statusMessage">处理中...</p>
             </div>
         </div>
     </div>
@@ -575,6 +1477,44 @@
             const uploadButton = document.getElementById('uploadButton');
             const mediaList = document.getElementById('mediaList');
             const clearHistoryBtn = document.querySelector('.clear-history-btn');
+            
+            // 工具调用追踪
+            const activeTools = new Map();
+            let toolsContainer = null;
+            let toolsMessageRow = null;
+            
+            // 添加全局函数用于搜索结果交互
+            // 切换单个搜索结果的展开/折叠状态
+            window.toggleResult = function(header) {
+                const details = header.nextElementSibling;
+                const icon = header.querySelector('.toggle-icon');
+                
+                if (details.style.display === 'none') {
+                    details.style.display = 'block';
+                    icon.style.transform = 'rotate(180deg)';
+                } else {
+                    details.style.display = 'none';
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            };
+            
+            // 切换所有搜索结果的展开/折叠状态
+            window.toggleAllResults = function(button) {
+                const resultContainer = button.closest('.search-results');
+                const results = resultContainer.querySelectorAll('.result-details');
+                const icons = resultContainer.querySelectorAll('.toggle-icon');
+                const isExpanding = button.textContent === '全部展开';
+                
+                results.forEach(detail => {
+                    detail.style.display = isExpanding ? 'block' : 'none';
+                });
+                
+                icons.forEach(icon => {
+                    icon.style.transform = isExpanding ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+                
+                button.textContent = isExpanding ? '全部折叠' : '全部展开';
+            };
             
             // 自动调整文本区高度
             messageInput.addEventListener('input', function() {
@@ -616,6 +1556,7 @@
             
             let typingRow = null;
             let currentAssistantMessage = null;
+            let accumulatedMarkdown = '';
             
             function startTypingIndicator() {
                 if (!typingRow) {
@@ -656,11 +1597,54 @@
                 currentAssistantMessage = null;
             }
             
+            // 处理工具状态更新
+            socket.on('tool_status', function(data) {
+                console.log('收到工具状态更新:', data);
+                
+                // 显示状态栏
+                const statusBar = document.getElementById('statusBar');
+                const progressBar = document.getElementById('progressBar');
+                const statusMessage = document.getElementById('statusMessage');
+                
+                statusBar.style.display = 'block';
+                
+                // 更新进度条
+                const progress = data.progress || 0;
+                progressBar.style.width = progress + '%';
+                progressBar.setAttribute('aria-valuenow', progress);
+                
+                // 更新状态消息
+                statusMessage.textContent = data.message || '处理中...';
+                
+                // 根据状态设置不同的颜色
+                if (data.status === 'error' || data.status === 'failed') {
+                    progressBar.style.backgroundColor = '#dc3545'; // 红色
+                } else if (data.status === 'completed' || data.status === 'end') {
+                    progressBar.style.backgroundColor = '#28a745'; // 绿色
+                    
+                    // 完成后3秒隐藏状态栏
+                    setTimeout(function() {
+                        statusBar.style.display = 'none';
+                    }, 3000);
+                } else {
+                    progressBar.style.backgroundColor = '#007bff'; // 蓝色
+                }
+            });
+            
+            // 当收到响应完成事件时，隐藏状态栏
+            socket.on('response_complete', function() {
+                const statusBar = document.getElementById('statusBar');
+                // 延迟隐藏，让用户有时间看到100%的进度
+                setTimeout(function() {
+                    statusBar.style.display = 'none';
+                }, 2000);
+            });
+            
             // 接收消息
             socket.on('message', function(data) {
-                console.log("收到消息:", data.type, data.media_type || 'text', data);
+                console.log("收到消息:", data.type, data.media_type || 'text', data.filename ? `文件名:${data.filename}` : '' , data.media_type === 'search_result' ? '(搜索结果)' : '');
                 
-                // 处理流式回复
+                // 处理流式回复 (非搜索结果)
                 if (data.type === 'assistant' && !data.media_type && !data.is_tool_result) {
                     // 检查是否已经有正在处理的助手消息
                     if (!currentAssistantMessage) {
@@ -683,69 +1667,13 @@
                     return;
                 }
                 
-                // 检查是否是多模态分析工具的结果
-                if (data.type === 'assistant' && data.is_tool_result && data.tool_name === 'analyze_multimodal_content') {
-                    // 如果存在输入指示器，删除它
-                    if (typingRow) {
-                        chatBox.removeChild(typingRow);
-                        typingRow = null;
-                    }
-                    
-                    // 创建新的消息行
-                    const messageRow = document.createElement('div');
-                    messageRow.className = 'message-row assistant';
-                    
-                    const avatar = document.createElement('div');
-                    avatar.className = 'avatar';
-                    avatar.textContent = 'AI';
-                    
-                    const message = document.createElement('div');
-                    message.className = 'message';
-                    
-                    const messageBubble = document.createElement('div');
-                    messageBubble.className = 'message-bubble';
-                    
-                    const messageContent = document.createElement('div');
-                    messageContent.className = 'message-content markdown-content';
-                    
-                    // 多模态工具结果是纯文本，使用marked渲染
-                    messageContent.innerHTML = marked.parse(data.content || '');
-                    
-                    // 应用代码高亮
-                    messageContent.querySelectorAll('pre code').forEach((block) => {
-                        hljs.highlightElement(block);
-                    });
-                    
-                    messageBubble.appendChild(messageContent);
-                    message.appendChild(messageBubble);
-                    
-                    // 添加时间戳
-                    const now = new Date();
-                    const time = now.getHours().toString().padStart(2, '0') + ':' + 
-                                now.getMinutes().toString().padStart(2, '0');
-                    
-                    const messageMeta = document.createElement('div');
-                    messageMeta.className = 'message-meta';
-                    messageMeta.textContent = time;
-                    message.appendChild(messageMeta);
-                    
-                    messageRow.appendChild(avatar);
-                    messageRow.appendChild(message);
-                    chatBox.appendChild(messageRow);
-                    
-                    // 滚动到底部
-                    scrollToBottom();
-                    return;
-                }
-                
-                // 媒体内容或非流式回复的处理
-                // 如果存在输入指示器，删除它
+                // 非流式回复或媒体内容或搜索结果的处理
                 if (typingRow) {
                     chatBox.removeChild(typingRow);
                     typingRow = null;
                 }
                 
-                // 创建新的消息行
+                // 创建消息行和元素
                 const messageRow = document.createElement('div');
                 messageRow.className = 'message-row';
                 
@@ -767,25 +1695,16 @@
                     avatar.textContent = '你';
                     
                     // 处理用户媒体内容
-                    if (data.has_combined) {
-                        console.log("处理用户组合内容:", data);
+                    if (data.media_type && data.media_content) {
+                        let mediaHtml = renderMediaContent(data.media_type, data.media_content, data.filename);
+                        messageContent.innerHTML = mediaHtml;
                         
-                        // 处理媒体内容
-                        if (data.media_type && data.media_content) {
-                            console.log("处理用户媒体:", data.media_type);
-                            let mediaHtml = renderMediaContent(data.media_type, data.media_content);
-                            messageContent.innerHTML = mediaHtml;
-                            
-                            // 如果同时有文本内容，添加到媒体下方
-                            if (data.content && data.content.trim()) {
-                                messageContent.innerHTML += `<div class="text-content">${data.content}</div>`;
-                            }
-                        } else {
-                            // 纯文本内容
-                            messageContent.textContent = data.content || '';
+                        // 如果同时有文本内容，添加到媒体下方
+                        if (data.content && data.content.trim()) {
+                            messageContent.innerHTML += `<div class="text-content">${data.content}</div>`;
                         }
                     } else {
-                        // 向后兼容旧的纯文本消息
+                        // 纯文本内容
                         messageContent.textContent = data.content || '';
                     }
                     
@@ -793,23 +1712,28 @@
                     messageRow.classList.add('assistant');
                     avatar.textContent = 'AI';
                     
-                    // 检查是否是多模态分析工具的结果
-                    if (data.is_tool_result && data.tool_name === 'analyze_multimodal_content') {
-                        console.log("处理多模态分析结果");
+                    // 特别处理搜索结果
+                    if (data.media_type === 'search_result') {
+                        console.log("渲染搜索结果卡片，数据：", data.media_content);
+                        let searchHtml = renderSearchResultCard(data.media_content);
+                        messageContent.innerHTML = searchHtml;
                         
-                        // 多模态工具结果是文本，使用Markdown渲染
+                        // 可选：添加摘要文本（如果需要）
+                        // if (data.content && data.content.trim()) {
+                        //     messageContent.innerHTML += `<div class="text-content">${marked.parse(data.content)}</div>`;
+                        // }
+                    } 
+                    // 处理多模态分析工具的结果 (非流式文本)
+                    else if (data.is_tool_result && data.tool_name === 'analyze_multimodal_content') {
                         messageContent.innerHTML = marked.parse(data.content || '');
-                        messageContent.classList.add('markdown-content');
-                        
-                        // 应用代码高亮
+                        messageContent.className = 'message-content markdown-body'; // 添加 markdown-body
                         messageContent.querySelectorAll('pre code').forEach((block) => {
                             hljs.highlightElement(block);
                         });
                     } 
                     // 处理其他媒体内容
                     else if (data.media_type && data.media_content) {
-                        console.log("处理助手媒体内容:", data.media_type);
-                        let mediaHtml = renderMediaContent(data.media_type, data.media_content);
+                        let mediaHtml = renderMediaContent(data.media_type, data.media_content, data.filename);
                         messageContent.innerHTML = mediaHtml;
                         
                         // 如果同时有文本内容，添加到媒体下方
@@ -817,25 +1741,26 @@
                             messageContent.innerHTML += `<div class="text-content">${marked.parse(data.content)}</div>`;
                         }
                         
-                        messageContent.classList.add('markdown-content');
+                        messageContent.className = 'message-content'; // 外层容器不需要
                     } else {
-                        // 纯文本/Markdown内容
+                        // 普通文本/Markdown内容 (非流式)
                         messageContent.innerHTML = marked.parse(data.content || '');
-                        messageContent.classList.add('markdown-content');
+                        messageContent.className = 'message-content markdown-body'; // 添加 markdown-body
                     }
                 } else if (data.type === 'tool') {
+                    // (工具类型的处理逻辑保持不变)
                     messageRow.classList.add('tool');
                     avatar.classList.add('tool');
                     avatar.textContent = '工具';
                     
                     // 检查是否是媒体内容
                     if (data.media_type) {
-                        messageContent.innerHTML = renderMediaContent(data.media_type, data.content);
+                        messageContent.innerHTML = renderMediaContent(data.media_type, data.content, data.filename);
                     } else {
                         // 使用marked.js渲染工具消息中的Markdown
                         messageContent.innerHTML = marked.parse(data.content || '');
-                        messageContent.classList.add('markdown-content');
-                        // 应用代码高亮
+                        messageContent.className = 'message-content markdown-body'; // 添加 markdown-body
+                        
                         messageContent.querySelectorAll('pre code').forEach((block) => {
                             hljs.highlightElement(block);
                         });
@@ -858,11 +1783,48 @@
                 messageRow.appendChild(avatar);
                 messageRow.appendChild(message);
                 chatBox.appendChild(messageRow);
+                
+                scrollToBottom();
             });
             
-            // 完成响应时重置当前消息
+            // 完成响应时检查工具状态
             socket.on('response_complete', function() {
                 endTypingIndicator();
+                
+                // 检查是否有未完成的工具
+                let hasRunningTools = false;
+                for (const [id, tool] of activeTools.entries()) {
+                    if (tool.status === 'running') {
+                        // 超过30秒的运行中工具自动标记为完成
+                        const now = new Date();
+                        const elapsedTime = (now - tool.startTime) / 1000;
+                        if (elapsedTime > 30) {
+                            tool.status = 'complete';
+                            tool.message += ' (自动完成)';
+                            tool.endTime = now;
+                        } else {
+                            hasRunningTools = true;
+                        }
+                    }
+                }
+                
+                // 更新工具UI
+                if (toolsContainer) {
+                    updateToolsUI();
+                    
+                    // 如果没有运行中的工具，设置定时器移除工具容器
+                    if (!hasRunningTools) {
+                        setTimeout(() => {
+                            // 再次检查是否有活动工具
+                            if (activeTools.size === 0 && toolsMessageRow) {
+                                chatBox.removeChild(toolsMessageRow);
+                                toolsMessageRow = null;
+                                toolsContainer = null;
+                            }
+                        }, 3000);
+                    }
+                }
+                
                 // 重置消息状态
                 currentAssistantMessage = null;
                 accumulatedMarkdown = '';
@@ -884,8 +1846,7 @@
                 messageBubble.className = 'message-bubble';
                 
                 const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                
+                messageContent.className = 'message-content markdown-body'; // 移除旧类，添加新类
                 messageBubble.appendChild(messageContent);
                 message.appendChild(messageBubble);
                 messageRow.appendChild(avatar);
@@ -895,19 +1856,23 @@
                 return messageContent;
             }
             
-            // 使用这个变量来累积Markdown内容
-            let accumulatedMarkdown = '';
-            
             function appendToAssistantMessage(messageElement, content) {
                 if (!content) return;
                 
                 // 累积Markdown内容
                 accumulatedMarkdown += content;
                 
-                // 使用marked渲染累积的Markdown内容
-                messageElement.innerHTML = marked.parse(accumulatedMarkdown);
-                messageElement.classList.add('markdown-content');
+                // 使用 marked.js 渲染，GitHub CSS 会处理样式
+                // 注意：marked.js 的 breaks: true 选项可能仍需保留，以处理单个换行符
+                messageElement.innerHTML = marked.parse(accumulatedMarkdown, { breaks: true }); 
                 
+                // 确保 markdown-body 类存在 (虽然 createAssistantMessageRow 已添加)
+                if (!messageElement.classList.contains('markdown-body')) {
+                     messageElement.classList.add('markdown-body');
+                }
+                 // 移除可能冲突的旧类
+                messageElement.classList.remove('markdown-content');
+
                 // 应用代码高亮
                 messageElement.querySelectorAll('pre code').forEach((block) => {
                     hljs.highlightElement(block);
@@ -928,7 +1893,7 @@
             
             function sendMessage() {
                 if (isWaitingForResponse) {
-                    updateStatus('请等待上一条消息的响应完成', true);
+                    updateStatus('请等待上一条消息的响应完成后再发送', true);
                     return;
                 }
                 
@@ -936,12 +1901,6 @@
                 if (!messageText && uploadedFiles.length === 0) {
                     return;
                 }
-                
-                // 不再自己添加用户消息，由后端统一处理并返回
-                // appendMessage({
-                //    type: 'user',
-                //    content: messageText
-                // });
                 
                 // 开始等待响应
                 isWaitingForResponse = true;
@@ -954,13 +1913,18 @@
                 // 如果有上传的文件
                 if (uploadedFiles.length > 0) {
                     console.log("发送消息包含媒体文件:", uploadedFiles.length);
+                    // ---> 添加详细日志
+                    console.log("Uploaded files structure before mapping:", JSON.stringify(uploadedFiles)); 
                     messageData.media_files = {
                         'has_media': true,
                         'files': uploadedFiles.map(file => ({
                             'path': file.path,
-                            'type': file.type
+                            'type': file.type,
+                            'name': file.filename || file.name // 添加文件名
                         }))
                     };
+                    // ---> 添加详细日志
+                    console.log("Media files being sent:", JSON.stringify(messageData.media_files));
                 }
                 
                 console.log("发送消息到服务器:", messageData);
@@ -990,38 +1954,48 @@
                 
                 updateStatus('正在上传文件...');
                 
-                console.log("开始上传文件");
                 fetch('/upload', {
                     method: 'POST',
                     body: formData
                 })
-                .then(response => {
-                    console.log("上传响应状态:", response.status);
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    console.log("上传响应数据:", data);
                     if (data.success) {
+                        // 确定文件类型
+                        let fileType = data.file_type;
+                        // 检查是否是文档类型
+                        if (['application/msword', 
+                             'application/vnd.ms-excel', 
+                             'application/vnd.ms-powerpoint',
+                             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                             'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                             'application/pdf',
+                             'text/plain'].includes(file.type)) {
+                            fileType = 'document';
+                        }
+                        
+                        // 使用服务器返回的原始文件名
+                        const originalFilename = data.filename || file.name;
+                        console.log(`使用文件名: ${originalFilename} (服务器返回: ${data.filename !== undefined}, 本地: ${file.name})`);
+                        
                         // 添加到上传文件列表
                         uploadedFiles.push({
-                            name: file.name,
+                            name: originalFilename,  // 使用原始文件名
                             path: data.file_path,
                             url: data.file_url,
-                            type: data.file_type
+                            type: fileType,
+                            filename: originalFilename  // 确保filename字段存在
                         });
                         
-                        console.log("文件已添加到列表:", uploadedFiles);
-                        
                         // 显示文件预览
-                        displayMediaPreview(file, data.file_url, data.file_type);
-                        updateStatus('文件上传成功');
+                        displayMediaPreview({name: originalFilename}, data.file_url, fileType);
+                        updateStatus(`文件上传成功: ${originalFilename}`);
                     } else {
-                        console.error("上传失败:", data.error);
                         updateStatus('文件上传失败: ' + data.error, true);
                     }
                 })
                 .catch(error => {
-                    console.error("上传出错:", error);
                     updateStatus('文件上传出错: ' + error.message, true);
                 });
                 
@@ -1042,6 +2016,28 @@
                     content = `<div class="audio-icon"><i class="bi bi-music-note"></i></div>`;
                 } else if (type === 'video') {
                     content = `<div class="video-icon"><i class="bi bi-camera-video"></i></div>`;
+                } else if (type === 'document') {
+                    // 文件名直接使用传入的file.name
+                    // 提取文件扩展名
+                    const fileExt = file.name.split('.').pop().toLowerCase();
+                    // 根据扩展名选择合适的图标
+                    let fileIcon = '';
+                    
+                    if (fileExt === 'doc' || fileExt === 'docx') {
+                        fileIcon = 'bi-file-earmark-word';
+                    } else if (fileExt === 'xls' || fileExt === 'xlsx') {
+                        fileIcon = 'bi-file-earmark-excel';
+                    } else if (fileExt === 'ppt' || fileExt === 'pptx') {
+                        fileIcon = 'bi-file-earmark-slides';
+                    } else if (fileExt === 'pdf') {
+                        fileIcon = 'bi-file-earmark-pdf';
+                    } else if (fileExt === 'txt') {
+                        fileIcon = 'bi-file-earmark-text';
+                    } else {
+                        fileIcon = 'bi-file-earmark';
+                    }
+                    
+                    content = `<div class="document-icon"><i class="bi ${fileIcon}"></i></div>`;
                 }
                 
                 const removeButton = `<button class="remove-btn" data-url="${url}">×</button>`;
@@ -1077,8 +2073,8 @@
             }
             
             // 媒体内容处理函数
-            function renderMediaContent(mediaType, mediaUrl) {
-                console.log(`渲染媒体内容: ${mediaType}, URL长度: ${mediaUrl ? mediaUrl.length : 0}`);
+            function renderMediaContent(mediaType, mediaUrl, filename) {
+                console.log(`渲染媒体内容: ${mediaType}, URL长度: ${mediaUrl ? mediaUrl.length : 0}, 文件名: ${filename || 'N/A'}`);
                 
                 if (!mediaUrl) {
                     return '<div class="error-message">媒体内容不可用</div>';
@@ -1092,6 +2088,74 @@
                         return `<audio controls class="media-preview"><source src="${mediaUrl}"></audio>`;
                     } else if (mediaType === 'video') {
                         return `<video controls class="media-preview"><source src="${mediaUrl}"></video>`;
+                    } else if (mediaType === 'document') {
+                        // 检查是否有传入文件名，优先使用传入的文件名
+                        // 注意：mediaUrl是一个data URI，包含了文件的base64内容，不应该用它来提取文件名
+                        let fileName = filename || "未命名文档";
+                        
+                        // 如果没有明确的文件名，且URL是一个http/https链接，尝试从URL提取
+                        if (!fileName && mediaUrl.startsWith('http')) {
+                            fileName = mediaUrl.split('/').pop();
+                            // 如果文件名包含uuid和时间戳前缀，则去除
+                            if (fileName.includes('_')) {
+                                const parts = fileName.split('_', 1);
+                                fileName = fileName.substring(parts[0].length + 1);
+                            }
+                        }
+                        
+                        // 提取文件扩展名（如果有）
+                        let fileExt = '';
+                        if (fileName.includes('.')) {
+                            fileExt = fileName.split('.').pop().toLowerCase();
+                        } else if (mediaUrl.startsWith('data:')) {
+                            // 从MIME类型尝试推断扩展名
+                            const mimeType = mediaUrl.split(';')[0].split(':')[1];
+                            if (mimeType === 'application/pdf') fileExt = 'pdf';
+                            else if (mimeType === 'application/msword') fileExt = 'doc';
+                            else if (mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') fileExt = 'docx';
+                            else if (mimeType === 'text/plain') fileExt = 'txt';
+                        }
+                        
+                        // 根据扩展名选择合适的图标
+                        let fileIcon = '';
+                        let fileType = '';
+                        
+                        if (fileExt === 'doc' || fileExt === 'docx') {
+                            fileIcon = 'bi-file-earmark-word';
+                            fileType = 'Word文档';
+                        } else if (fileExt === 'xls' || fileExt === 'xlsx') {
+                            fileIcon = 'bi-file-earmark-excel';
+                            fileType = 'Excel表格';
+                        } else if (fileExt === 'ppt' || fileExt === 'pptx') {
+                            fileIcon = 'bi-file-earmark-slides';
+                            fileType = 'PowerPoint演示文稿';
+                        } else if (fileExt === 'pdf') {
+                            fileIcon = 'bi-file-earmark-pdf';
+                            fileType = 'PDF文档';
+                        } else if (fileExt === 'txt') {
+                            fileIcon = 'bi-file-earmark-text';
+                            fileType = '文本文件';
+                        } else {
+                            fileIcon = 'bi-file-earmark';
+                            fileType = '文档';
+                        }
+                        
+                        return `
+                        <div class="document-preview">
+                            <div class="document-icon">
+                                <i class="bi ${fileIcon}"></i>
+                            </div>
+                            <div class="document-info">
+                                <div class="document-name">${fileName}</div>
+                                <div class="document-type">${fileType}</div>
+                            </div>
+                            <a href="${mediaUrl}" download="${fileName}" target="_blank" class="document-download-btn">
+                                <i class="bi bi-download"></i>
+                            </a>
+                        </div>`;
+                    } else if (mediaType === 'search_result') {
+                        // 调用新的渲染函数
+                        return renderSearchResultCard(mediaUrl); // mediaUrl 此时是 JSON 对象
                     }
                 } catch (e) {
                     console.error("渲染媒体内容出错:", e);
@@ -1101,147 +2165,121 @@
                 return '';
             }
             
-            // 修改添加消息到聊天界面的函数
-            function appendMessage(data) {
-                // 如果存在输入指示器，删除它
-                if (typingRow) {
-                    chatBox.removeChild(typingRow);
-                    typingRow = null;
+            // 新增：渲染搜索结果卡片的函数
+            function renderSearchResultCard(data) {
+                if (!data || data.type !== 'search_results') {
+                    return '<div class="error-message">搜索结果数据无效</div>';
                 }
                 
-                // 对于AI消息，如果正在流式处理，不创建新元素
-                if (data.type === 'assistant' && currentAssistantMessage) {
-                    return;
+                const query = data.query || '搜索结果';
+                const webResults = data.web_results || [];
+                const imageResults = data.image_results || [];
+                const totalResults = webResults.length;
+                
+                let html = `
+                <div class="chatgpt-search-results">
+                    <div class="search-header">
+                        <div class="search-info">
+                            <div class="search-icon"><i class="bi bi-search"></i></div>
+                            <div class="search-text">
+                                <div class="search-query">${query}</div>
+                                <div class="search-count">找到 ${totalResults} 条网页结果${imageResults.length > 0 ? `, ${imageResults.length} 张图片` : ''}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="search-results-container">
+                `;
+                
+                // 处理网页结果
+                if (webResults.length > 0) {
+                    webResults.forEach(result => {
+                        const title = result.title || '无标题';
+                        const url = result.url || '#';
+                        const displayUrl = result.displayUrl || url;
+                        const snippet = result.snippet || '无摘要信息';
+                        const siteName = result.siteName || '';
+                        const siteIcon = result.siteIcon;
+                        const datePublished = result.datePublished ? formatDate(result.datePublished) : '';
+                        
+                        const iconHtml = siteIcon ? 
+                            `<img src="${siteIcon}" class="site-icon" alt="${siteName}" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='block';">` : 
+                            '<div class="site-icon-placeholder"></div>';
+                        const iconPlaceholderHtml = '<div class="site-icon-placeholder" style="display: none;"></div>';
+
+                        html += `
+                        <div class="search-result-item">
+                            <a href="${url}" target="_blank" rel="noopener noreferrer" class="search-result-link">
+                                <div class="search-result-title-row">
+                                    ${iconHtml}
+                                    ${iconPlaceholderHtml}
+                                    <h5 class="search-result-title">${title}</h5>
+                                </div>
+                                <div class="search-result-url">${displayUrl}</div>
+                                <p class="search-result-snippet">${snippet}</p>
+                                <div class="search-result-meta">
+                                    ${siteName ? `<span class="search-result-source">${siteName}</span>` : ''}
+                                    ${datePublished ? `<span class="search-result-date">${datePublished}</span>` : ''}
+                                </div>
+                            </a>
+                        </div>
+                        `;
+                    });
+                } else {
+                    html += '<div class="search-no-results">未找到相关网页结果</div>';
                 }
                 
-                const messageRow = document.createElement('div');
-                messageRow.className = 'message-row';
-                
-                const avatar = document.createElement('div');
-                avatar.className = 'avatar';
-                
-                const message = document.createElement('div');
-                message.className = 'message';
-                
-                const messageBubble = document.createElement('div');
-                messageBubble.className = 'message-bubble';
-                
-                const messageContent = document.createElement('div');
-                messageContent.className = 'message-content';
-                
-                if (data.type === 'user') {
-                    messageRow.classList.add('user');
-                    avatar.classList.add('user');
-                    avatar.textContent = '你';
-                    
-                    // 处理组合消息（文本+媒体）
-                    if (data.has_combined) {
-                        console.log("渲染组合消息:", data);
-                        let content = '';
-                        
-                        // 添加媒体内容（如果有）
-                        if (data.media_type && data.media_content) {
-                            content += renderMediaContent(data.media_type, data.media_content);
-                        } else if (data.media_type === 'audio' && !data.media_content) {
-                            // 特殊处理仅有音频描述但没有实际内容的情况
-                            content += `<div class="audio-icon"><i class="bi bi-music-note" style="font-size: 3em;"></i></div>`;
+                // 处理图片结果（如果存在）
+                if (imageResults.length > 0) {
+                    html += '<div class="search-images-container">';
+                    imageResults.forEach(img => {
+                        if (img.url) {
+                            html += `
+                            <a href="${img.host_page || img.url}" target="_blank" rel="noopener noreferrer" class="search-image-item">
+                                <img src="${img.thumbnailUrl || img.url}" alt="搜索图片" loading="lazy" onerror="this.onerror=null; this.parentElement.style.display='none';">
+                            </a>
+                            `;
                         }
-                        
-                        // 添加文本内容（如果有）
-                        if (data.content && data.content.trim()) {
-                            // 如果有媒体内容，增加一些间距
-                            if ((data.media_content || data.media_type === 'audio') && !content.includes("<div")) {
-                                content += `<div style="margin-top: 10px;"></div>`;
-                            }
-                            content += `<div>${data.content}</div>`;
-                        }
-                        
-                        messageContent.innerHTML = content;
-                    }
-                    // 处理普通消息
-                    else if (data.media_type) {
-                        // 单纯的媒体消息
-                        messageContent.innerHTML = renderMediaContent(data.media_type, data.content);
-                    } else {
-                        // 纯文本消息
-                        messageContent.textContent = data.content;
-                    }
-                } else if (data.type === 'assistant') {
-                    messageRow.classList.add('assistant');
-                    avatar.textContent = 'AI';
-                    
-                    // 首先检查是否是工具结果
-                    if (data.is_tool_result) {
-                        console.log("处理工具结果:", data);  // 添加调试日志
-                        if (data.media_type === 'image') {
-                            messageContent.innerHTML = `
-                                <div class="tool-result">
-                                    <img src="${data.media_content}" class="media-preview" alt="生成的图片" 
-                                         onerror="console.error('图片加载失败:', this.src)"/>
-                                </div>`;
-                        }
-                    } else {
-                        // 处理普通的助手消息
-                        if (data.media_type && data.media_content) {
-                            // 处理媒体内容
-                            if (data.media_type === 'image') {
-                                messageContent.innerHTML = `
-                                    <img src="${data.media_content}" class="media-preview" alt="图片" 
-                                         onerror="console.error('图片加载失败:', this.src)"/>`;
-                            }
-                            // 如果还有文本内容，添加到媒体下方
-                            if (data.content) {
-                                messageContent.innerHTML += `<div class="text-content">${marked.parse(data.content)}</div>`;
-                            }
-                        } else {
-                            // 纯文本内容
-                    messageContent.innerHTML = marked.parse(data.content || '');
-                        }
-                    }
-                    
-                    // 添加调试信息
-                    console.log("渲染的消息内容:", messageContent.innerHTML);
-                } else if (data.type === 'tool') {
-                    messageRow.classList.add('tool');
-                    avatar.classList.add('tool');
-                    avatar.textContent = '工具';
-                    
-                    // 检查是否是媒体内容
-                    if (data.media_type) {
-                        messageContent.innerHTML = renderMediaContent(data.media_type, data.content);
-                    } else {
-                        // 使用marked.js渲染工具消息中的Markdown
-                        messageContent.innerHTML = marked.parse(data.content || '');
-                        messageContent.classList.add('markdown-content');
-                        // 应用代码高亮
-                        messageContent.querySelectorAll('pre code').forEach((block) => {
-                            hljs.highlightElement(block);
-                        });
-                    }
+                    });
+                    html += '</div>';
                 }
                 
-                messageBubble.appendChild(messageContent);
-                message.appendChild(messageBubble);
-                
-                // 添加消息时间
-                const now = new Date();
-                const time = now.getHours().toString().padStart(2, '0') + ':' + 
-                            now.getMinutes().toString().padStart(2, '0');
-                            
-                const messageMeta = document.createElement('div');
-                messageMeta.className = 'message-meta';
-                messageMeta.textContent = time;
-                message.appendChild(messageMeta);
-                
-                messageRow.appendChild(avatar);
-                messageRow.appendChild(message);
-                chatBox.appendChild(messageRow);
+                html += '</div></div>';
+                return html;
+            }
+            
+            // 辅助函数：格式化日期
+            function formatDate(dateString) {
+                if (!dateString) return '';
+                try {
+                    const date = new Date(dateString);
+                    // 只显示年月日
+                    return date.toLocaleDateString('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' });
+                } catch (e) {
+                    console.error('日期格式化错误:', e);
+                    return '';
+                }
             }
             
             // 更新状态栏
             function updateStatus(message, isError = false) {
-                statusBar.textContent = message;
-                statusBar.style.color = isError ? 'var(--error-color)' : 'var(--muted-color)';
+                // 将状态信息直接显示在输入框下方，而不是覆盖整个statusBar
+                const statusElement = document.getElementById('statusMessage');
+                statusElement.textContent = message;
+                statusElement.style.color = isError ? 'var(--error-color)' : 'var(--muted-color)';
+                
+                // 控制整个statusBar的显示
+                const statusBarElement = document.getElementById('statusBar');
+                statusBarElement.style.display = 'block';
+                
+                // 如果不是错误，短时间后自动隐藏状态栏
+                if (!isError) {
+                    setTimeout(() => {
+                        // 检查是否还有其他状态消息
+                        if (statusElement.textContent === message) {
+                             statusBarElement.style.display = 'none';
+                        }
+                    }, 4000);
+                }
             }
             
             // 滚动到底部
@@ -1286,6 +2324,32 @@
                         '<div class="error-message">图片加载失败</div>');
                 }
             }, true);
+
+            // 处理搜索结果的函数
+            function processSearchResults(markdownContent) {
+                // 这个函数不再需要，因为搜索结果在后端处理并以JSON格式传递
+                return null;
+            }
+
+            // 创建搜索结果的HTML
+            function createSearchResultsHTML(searchResults) {
+                 // 这个函数不再需要，使用 renderSearchResultCard 代替
+                return '';
+            }
+
+            // 处理消息内容，分离和处理搜索结果
+            function processMessage(markdownContent) {
+                // 这个函数不再需要，因为搜索结果在后端处理
+                return {
+                    displayContent: markdownContent,
+                    searchResultsHTML: ''
+                };
+            }
+
+            // 更新消息渲染函数
+            async function renderMessage(message) {
+                 // 这个函数不再需要，消息渲染逻辑已整合到 socket.on('message') 中
+            }
         });
     </script>
 </body>

@@ -1,4 +1,4 @@
-#uv pip install flask flask-socketio nest-asyncio Pillow python-dotenv openai httpx mcp requests dashscope
+#uv pip install flask flask-socketio nest-asyncio Pillow python-dotenv openai httpx mcp requests dashscopenv PyPDF2 python-docx pandas openpyxl python-pptx>=0.6.21 
 flask
 flask_socketio
 nest_asyncio
@@ -9,3 +9,8 @@ httpx
 mcp
 requests
 dashscope
+PyPDF2
+python-docx
+pandas
+openpyxl
+python-pptx>=0.6.21
