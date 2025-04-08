@@ -121,7 +121,7 @@ uv pip install -r requirements.txt
 
 ```shell
 cd client
-uv run client.py  ./server/workbrain.py
+uv run workbrain_client.py  ./server/workbrain_server.py
 ```
 
 # 开源协议
