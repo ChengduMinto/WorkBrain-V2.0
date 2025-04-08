@@ -119,8 +119,10 @@ uv pip install -r requirements.txt
 
 网页交互运行： 
 
+```shell
 cd client
 uv run client.py  ./server/workbrain.py
+```
 
 # 开源协议
 ## 模型协议
