@@ -564,8 +564,8 @@ class MCPWebClient:
             
             # 复制文件到静态目录
             filename = os.path.basename(file_path)
-            os.makedirs('static/outputs', exist_ok=True)
-            destination_path = f'static/outputs/{filename}'
+            os.makedirs(app.config['OUTPUT_FOLDER'], exist_ok=True)
+            destination_path = os.path.join(app.config['OUTPUT_FOLDER'], filename)
             
             shutil.copy2(file_path, destination_path)
             print(f"已复制媒体文件: {file_path} -> {destination_path}")
@@ -704,17 +704,6 @@ class MCPWebClient:
                     ext = '.jpg' if media_type == 'image' else '.mp4' if media_type == 'video' else '.mp3'
                     filename = f"{base_name}_{int(time.time())}{ext}"
             
-            # --- START MODIFICATION ---
-            # 定义媒体生成工具
-            media_generation_tools = ['generate_image', 'generate_speech_stream', 'generate_video']
-
-            # 检查是否为成功的媒体生成工具结果
-            if tool_name in media_generation_tools and media_type != 'text':
-                print(f"结果来自媒体生成工具 {tool_name}，抑制直接发送到前端。")
-                # 直接返回True，结果将在后续回应中处理
-                return True
-            # --- END MODIFICATION ---
-
             # 构建工具响应消息
             message_data = {
                 'type': 'assistant',  # 修改为'assistant'类型，让前端以统一方式处理

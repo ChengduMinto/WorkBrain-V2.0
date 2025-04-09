@@ -44,7 +44,7 @@ client = OpenAI(
 mcp = FastMCP("dashscope-multimodal")
 
 # 确保输出目录存在
-output_dir = "static/outputs"
+output_dir = "client/static/outputs"
 os.makedirs(output_dir, exist_ok=True)
 
 # 配置日志

@@ -11,6 +11,89 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown-light.min.css" integrity="sha512-5B+WYWJHJ+zO2vZImh0ZzbzVEp8ZBI1YO+caHYsOkfHrEWsMAhdrrPxtDkGT2EQX+Y7nY7zce9UKe+LPs3Sgcg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.jsdelivr.net/npm/marked@4.2.3/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/lib/highlight.min.js"></script>
+    <script>
+        // 配置marked.js，禁用图片自动渲染
+        document.addEventListener('DOMContentLoaded', function() {
+            // 增加一个全局后处理函数，用于处理渲染后的HTML内容
+            function postProcessHtml(html) {
+                if (!html) return html;
+                
+                // 替换所有空链接或只包含空白的链接
+                return html.replace(/<a\s+href=["']([^"']+)["'][^>]*>(\s*)<\/a>/gi, function(match, url, innerContent) {
+                    // 去除可能的协议和域名前缀，只保留路径部分进行判断
+                    const pathPart = url.replace(/^https?:\/\/[^\/]+/i, '');
+                    
+                    // 根据链接类型添加适当的文本
+                    let linkText = '[链接]';
+                    if (pathPart.match(/\.(mp3|wav|ogg)(\?.*)?$/i) || pathPart.includes('audio') || pathPart.includes('speech')) {
+                        linkText = '[音频: 点击播放]';
+                    } else if (pathPart.match(/\.(mp4|mov|webm|avi)(\?.*)?$/i) || pathPart.includes('video')) {
+                        linkText = '[视频: 点击观看]';
+                    } else if (pathPart.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i) || pathPart.includes('image')) {
+                        linkText = '[图片: 点击查看]';
+                    }
+                    
+                    return `<a href="${url}" target="_blank">${linkText}</a>`;
+                });
+            }
+            
+            const renderer = new marked.Renderer();
+            
+            // 保存原始的图片渲染函数
+            const originalImageRenderer = renderer.image;
+            
+            // 重写图片渲染函数，将图片转为链接而不是<img>标签
+            renderer.image = function(href, title, text) {
+                // 检查是否是工具结果，如果不是则将图片转换为链接
+                // 这个判断仅适用于模型回复中插入的图片，而不影响工具结果
+                return `<a href="${href}" target="_blank" title="${title || text || '图片'}">[图片: ${text || '点击查看'}]</a>`;
+            };
+            
+            // 保存原始的HTML处理函数
+            const originalHtmlRenderer = renderer.html;
+            
+            // 重写HTML处理函数，将audio和video标签转为链接
+            renderer.html = function(html) {
+                if (!html) return '';
+                
+                // 处理audio标签
+                if (html.includes('<audio') || html.includes('</audio>')) {
+                    // 从audio标签中提取src属性
+                    const srcMatch = html.match(/src=["']([^"']+)["']/i);
+                    const src = srcMatch ? srcMatch[1] : '#';
+                    return `<a href="${src}" target="_blank">[音频: 点击播放]</a>`;
+                }
+                
+                // 处理video标签
+                if (html.includes('<video') || html.includes('</video>')) {
+                    // 从video标签中提取src属性
+                    const srcMatch = html.match(/src=["']([^"']+)["']/i);
+                    const src = srcMatch ? srcMatch[1] : '#';
+                    return `<a href="${src}" target="_blank">[视频: 点击观看]</a>`;
+                }
+                
+                // 使用原始HTML渲染器
+                return originalHtmlRenderer.call(this, html);
+            };
+            
+            // 设置全局渲染器
+            marked.setOptions({
+                renderer: renderer,
+                breaks: true,
+                gfm: true
+            });
+
+            // 覆盖marked.parse方法，在渲染后应用后处理
+            const originalParse = marked.parse;
+            marked.parse = function() {
+                const result = originalParse.apply(this, arguments);
+                return postProcessHtml(result);
+            };
+
+            // 注意：工具生成的媒体内容通过renderMediaContent函数渲染，
+            // 而不是通过marked.js渲染，所以上面的修改不会影响工具生成的媒体内容
+        });
+    </script>
     <style>
         :root {
             --bg-color: #f7f7f8;
